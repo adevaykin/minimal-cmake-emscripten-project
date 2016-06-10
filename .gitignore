@@ -1,4 +1,5 @@
 build/
+emtest/
 build.emscripten/*.js
 build.emscripten/*.data
 CMakeLists.txt.user
