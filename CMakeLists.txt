@@ -18,24 +18,7 @@ file(GLOB_RECURSE CORE_SRC src/*.cpp)
 # Trying usual cmake project compiler execution
 #
 
-add_definitions("-s DEMANGLE_SUPPORT=1 --preload-file ${CMAKE_SOURCE_DIR}/assets --bind")
+add_definitions("-std=c++11")
 add_executable(client ${CORE_SRC} ${CORE_HDR})
 
-
-#
-# Manual emcc execution
-#
-
-add_custom_command(
-    OUTPUT manual-client.js
-    COMMAND ${CMAKE_CXX_COMPILER}
-    -I${CMAKE_SOURCE_DIR}/lib/assimp/include
-    -s DEMANGLE_SUPPORT=1
-    --preload-file ${CMAKE_SOURCE_DIR}/assets
-    --bind
-    ${CORE_SRC}
-    ${CMAKE_SOURCE_DIR}/lib/assimp/lib-js/libassimp.so
-    -o ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/manual-client.js
-)
-
-add_custom_target(emscripten-client DEPENDS manual-client.js)
+set_target_properties(client PROPERTIES LINK_FLAGS "-s DEMANGLE_SUPPORT=1 --preload-file ${CMAKE_SOURCE_DIR}/assets --bind")
